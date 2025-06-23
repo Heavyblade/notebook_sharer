@@ -1,0 +1,34 @@
+{% extends "base.html" %}
+
+{% block content %}
+    <h1>Hi, {{ current_user.username }}!</h1>
+    <div class="container">
+        <div class="classes-menu">
+            <h2>Classes Menu</h2>
+            <ul>
+                {% for class in classes %}
+                    <li><a href="#">{{ class.name }}</a></li>
+                {% endfor %}
+            </ul>
+            <a href="{{ url_for('add_class') }}">Add Class</a>
+        </div>
+        <div class="day-notes">
+            <h2>Day Notes</h2>
+            {% for class in classes %}
+                <h3>{{ class.name }}</h3>
+                <a href="{{ url_for('add_note', class_id=class.id) }}">Add Note</a>
+                <a href="{{ url_for('edit_class', id=class.id) }}">Edit Class</a>
+                <a href="{{ url_for('delete_class', id=class.id) }}">Delete Class</a>
+                {% for note in class.notes %}
+                    <div class="note">
+                        <p>Date: {{ note.date }}</p>
+                        <p>Topics: {{ note.topics }}</p>
+                        <img src="{{ url_for('static', filename='uploads/' + note.image_path) }}" width="200px">
+                        <a href="{{ url_for('edit_note', id=note.id) }}">Edit Note</a>
+                        <a href="{{ url_for('delete_note', id=note.id) }}">Delete Note</a>
+                    </div>
+                {% endfor %}
+            {% endfor %}
+        </div>
+    </div>
+{% endblock %}

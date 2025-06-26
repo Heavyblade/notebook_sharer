@@ -2,12 +2,12 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>{{ title }} - My Class NoteBooks</title>
+    <title>{{ title }} - Mis Notas de Clase</title>
     <link rel="stylesheet" href="{{ url_for('static', filename='style.css') }}">
 </head>
 <body>
     <nav class="navbar">
-        <div class="navbar-title">My Class NoteBooks</div>
+        <div class="navbar-title">Mis Notas de clase</div>
         <div class="navbar-links">
             <a href="{{ url_for('index') }}">Home</a>
             {% if current_user.is_anonymous %}

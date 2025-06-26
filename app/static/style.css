@@ -7,30 +7,66 @@ body {
     color: #d4d4d4;
 }
 
-.sidebar {
-    width: 250px;
+.navbar {
+    width: 100%;
     background-color: #252526;
-    padding: 20px;
     display: flex;
-    flex-direction: column;
-    border-right: 1px solid #333;
+    align-items: center;
+    justify-content: space-between;
+    padding: 0 30px;
+    height: 60px;
+    border-bottom: 1px solid #333;
+    position: fixed;
+    top: 0;
+    left: 0;
+    z-index: 1000;
+    box-sizing: border-box;
 }
 
-.sidebar h2 {
-    color: #ffffff;
-    margin-top: 0;
+.navbar-title {
+    color: #fff;
+    font-size: 1.5em;
+    font-weight: bold;
+    white-space: nowrap;
 }
 
-.sidebar a {
+.navbar-links {
+    display: flex;
+    gap: 20px;
+    flex-wrap: wrap;
+    align-items: center;
+}
+
+.navbar-links a {
     color: #d4d4d4;
     text-decoration: none;
-    padding: 10px;
+    padding: 10px 15px;
     border-radius: 5px;
-    margin-bottom: 10px;
+    transition: background 0.2s;
+    white-space: nowrap;
 }
 
-.sidebar a:hover {
+.navbar-links a:hover {
     background-color: #37373d;
+}
+
+@media (max-width: 600px) {
+    .navbar {
+        flex-direction: column;
+        align-items: flex-start;
+        height: auto;
+        padding: 10px 10px;
+    }
+    .navbar-links {
+        width: 100%;
+        justify-content: flex-start;
+        gap: 10px;
+        margin-top: 10px;
+    }
+}
+
+.sidebar {
+    display: none !important;
 }
 
 .main-content {
@@ -38,6 +74,7 @@ body {
     padding: 20px;
     background-color: #1e1e1e;
     overflow-y: auto;
+    margin-top: 70px; /* para dejar espacio a la navbar fija */
 }
 
 .flashes {

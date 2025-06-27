@@ -4,13 +4,20 @@
     <h1>Hi, {{ current_user.username }}!</h1>
     <div class="container">
         <div class="classes-menu">
-            <h2>Classes Menu</h2>
-            <ul>
+            <h2><i class="fa-solid fa-file-lines"></i> Mis Clases</h2>
+            <ul class="class-list">
                 {% for class in classes %}
-                    <li><a href="#">{{ class.name }}</a></li>
+                <li class="class-item {% if loop.first %}active{% endif %}">
+                    <span class="class-color-dot"></span>
+                    <span class="class-name">{{ class.name }}</span>
+                    <span class="note-count">{{ class.notes.count() }}</span>
+                    <i class="fa-solid fa-chevron-right"></i>
+                </li>
                 {% endfor %}
             </ul>
-            <a href="{{ url_for('add_class') }}" class="btn-action btn-add">Add Class</a>
+            <a href="{{ url_for('add_class') }}" class="btn-action btn-add-class">
+                <i class="fa-solid fa-plus"></i> Agregar Clase
+            </a>
         </div>
         <div class="day-notes">
             <h2>Day Notes</h2>

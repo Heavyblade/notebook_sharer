@@ -94,14 +94,94 @@ body {
     gap: 20px;
 }
 
-.classes-menu, .day-notes {
-    background-color: #1F2937; /* Darker component background */
-    padding: 20px;
-    border-radius: 8px;
-}
-
 .classes-menu {
     width: 300px;
+    background-color: #1F2937;
+    padding: 20px;
+    border-radius: 12px;
+    box-shadow: 0 4px 12px rgba(0, 0, 0, 0.1);
+}
+
+.classes-menu h2 {
+    display: flex;
+    align-items: center;
+    gap: 10px;
+    font-size: 1.5em;
+    margin-bottom: 20px;
+}
+
+.class-list {
+    list-style: none;
+    padding: 0;
+    margin: 0;
+    margin-bottom: 20px;
+}
+
+.class-item {
+    display: flex;
+    align-items: center;
+    padding: 15px;
+    border-radius: 8px;
+    margin-bottom: 10px;
+    cursor: pointer;
+    transition: background-color 0.2s;
+    border: 1px solid transparent;
+}
+
+.class-item:hover {
+    background-color: #2c3a4e;
+}
+
+.class-item.active {
+    background-color: #2c3a4e;
+    border-color: #3b82f6;
+}
+
+.class-color-dot {
+    width: 12px;
+    height: 12px;
+    border-radius: 50%;
+    margin-right: 15px;
+}
+
+.class-item:nth-child(1) .class-color-dot { background-color: #3b82f6; } /* Blue */
+.class-item:nth-child(2) .class-color-dot { background-color: #22c55e; } /* Green */
+.class-item:nth-child(3) .class-color-dot { background-color: #a855f7; } /* Purple */
+/* Add more colors as needed */
+
+.class-name {
+    flex-grow: 1;
+    font-weight: 500;
+}
+
+.note-count {
+    background-color: #374151;
+    padding: 4px 8px;
+    border-radius: 12px;
+    font-size: 0.9em;
+    margin-right: 15px;
+}
+
+.class-item i {
+    color: #6b7280;
+}
+
+.btn-add-class {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    padding: 15px;
+    border-radius: 8px;
+    background: linear-gradient(to right, #3b82f6, #8b5cf6);
+    color: white;
+    font-size: 1.1em;
+    font-weight: 500;
+    text-decoration: none;
+    gap: 10px;
+}
+
+.btn-add-class:hover {
+    opacity: 0.9;
 }
 
 .day-notes {
@@ -252,8 +332,4 @@ form input[type="submit"]:hover {
     display: inline-flex;
     align-items: center;
     justify-content: center;
-}
-.btn-icon i {
-    margin: 0;
-    font-size: 1.1em;
 }

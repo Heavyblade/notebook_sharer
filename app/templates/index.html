@@ -25,8 +25,8 @@
                         <p>Topics: {{ note.topics }}</p>
                         <img src="{{ url_for('static', filename='uploads/' + note.image_path) }}" width="200px">
                         <div class="note-actions">
-                            <a href="{{ url_for('edit_note', id=note.id) }}" class="btn-action btn-edit">Edit Note</a>
-                            <a href="{{ url_for('delete_note', id=note.id) }}" class="btn-action btn-delete">Delete Note</a>
+                            <a href="{{ url_for('edit_note', id=note.id) }}" class="btn-action btn-edit btn-icon" title="Edit Note"><i class="fa-solid fa-pen-to-square"></i></a>
+                            <a href="{{ url_for('delete_note', id=note.id) }}" class="btn-action btn-delete btn-icon" title="Delete Note"><i class="fa-solid fa-trash"></i></a>
                         </div>
                     </div>
                 {% endfor %}

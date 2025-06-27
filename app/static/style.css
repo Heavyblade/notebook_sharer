@@ -211,3 +211,17 @@ form input[type="submit"]:hover {
 .btn-note:hover {
     background: #f9a825;
 }
+
+.btn-icon {
+    padding: 4px 8px;
+    font-size: 0.95em;
+    min-width: 32px;
+    min-height: 32px;
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+}
+.btn-icon i {
+    margin: 0;
+    font-size: 1.1em;
+}

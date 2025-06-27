@@ -3,19 +3,19 @@ body {
     margin: 0;
     display: flex;
     height: 100vh;
-    background-color: #1e1e1e;
+    background-color: #111827; /* Dark blue background */
     color: #d4d4d4;
 }
 
 .navbar {
     width: 100%;
-    background-color: #252526;
+    background-color: #1F2937; /* Darker component background */
     display: flex;
     align-items: center;
     justify-content: space-between;
     padding: 0 30px;
     height: 60px;
-    border-bottom: 1px solid #333;
+    border-bottom: 1px solid #374151; /* Border color */
     position: fixed;
     top: 0;
     left: 0;
@@ -24,8 +24,8 @@ body {
 }
 
 .navbar-title {
-    color: #fff;
-    font-size: 1.5em;
+    color: #F9FAFB; /* Lighter title color */
+    font-size: 1.8em; /* Increased title size */
     font-weight: bold;
     white-space: nowrap;
 }
@@ -72,7 +72,7 @@ body {
 .main-content {
     flex-grow: 1;
     padding: 20px;
-    background-color: #1e1e1e;
+    background-color: #111827; /* Dark blue background */
     overflow-y: auto;
     margin-top: 70px; /* para dejar espacio a la navbar fija */
 }
@@ -95,7 +95,7 @@ body {
 }
 
 .classes-menu, .day-notes {
-    background-color: #252526;
+    background-color: #1F2937; /* Darker component background */
     padding: 20px;
     border-radius: 8px;
 }
@@ -109,8 +109,8 @@ body {
 }
 
 .note {
-    background-color: #2d2d2d;
-    border: 1px solid #37373d;
+    background-color: #1F2937; /* Darker component background */
+    border: 1px solid #374151; /* Border color */
     padding: 15px;
     margin-bottom: 15px;
     border-radius: 5px;
@@ -121,11 +121,11 @@ body {
 }
 
 h1, h2, h3 {
-    color: #ffffff;
+    color: #F9FAFB; /* Lighter title color */
 }
 
 a {
-    color: #3794ff;
+    color: #38bdf8; /* Light blue for links */
 }
 
 form {
@@ -171,7 +171,7 @@ form input[type="submit"]:hover {
     font-size: 1em;
     font-weight: 500;
     padding: 8px 20px;
-    border: none;
+    border: 1px solid transparent;
     border-radius: 4px;
     box-shadow: 0 2px 4px rgba(0,0,0,0.08);
     cursor: pointer;
@@ -181,27 +181,59 @@ form input[type="submit"]:hover {
 }
 
 .btn-add {
-    background: #1976d2;
+    background: linear-gradient(to right, #8b5cf6, #3b82f6); /* Purple to blue gradient */
     color: #fff;
 }
 .btn-add:hover {
-    background: #1565c0;
+    opacity: 0.9;
 }
 
 .btn-edit {
-    background: #43a047;
-    color: #fff;
+    background: transparent;
+    color: #22c55e; /* Green */
+    border-color: #22c55e;
 }
 .btn-edit:hover {
-    background: #388e3c;
+    background: #22c55e;
+    color: #fff;
 }
 
 .btn-delete {
-    background: #e53935;
-    color: #fff;
+    background: transparent;
+    color: #ef4444; /* Red */
+    border-color: #ef4444;
 }
 .btn-delete:hover {
-    background: #b71c1c;
+    background: #ef4444;
+    color: #fff;
+}
+
+.btn-add-note {
+    background-color: #22c55e; /* Green */
+    color: #fff;
+}
+.btn-add-note:hover {
+    background-color: #16a34a;
+}
+
+.btn-edit-class {
+    background-color: transparent;
+    color: #3b82f6; /* Blue */
+    border-color: #3b82f6;
+}
+.btn-edit-class:hover {
+    background-color: #3b82f6;
+    color: #fff;
+}
+
+.btn-delete-class {
+    background-color: transparent;
+    color: #ef4444; /* Red */
+    border-color: #ef4444;
+}
+.btn-delete-class:hover {
+    background-color: #ef4444;
+    color: #fff;
 }
 
 .btn-note {

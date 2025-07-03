@@ -7,11 +7,13 @@
             <h2><i class="fa-solid fa-file-lines"></i> Mis Clases</h2>
             <ul class="class-list">
                 {% for class in classes %}
-                <li class="class-item {% if loop.first %}active{% endif %}">
-                    <span class="class-color-dot"></span>
-                    <span class="class-name">{{ class.name }}</span>
-                    <span class="note-count">{{ class.notes.count() }}</span>
-                    <i class="fa-solid fa-chevron-right"></i>
+                <li class="class-item {% if selected_class and class.id == selected_class.id %}active{% endif %}">
+                    <a href="{{ url_for('index', class_id=class.id) }}">
+                        <span class="class-color-dot"></span>
+                        <span class="class-name">{{ class.name }}</span>
+                        <span class="note-count">{{ class.notes.count() }}</span>
+                        <i class="fa-solid fa-chevron-right"></i>
+                    </a>
                 </li>
                 {% endfor %}
             </ul>
@@ -20,13 +22,12 @@
             </a>
         </div>
         <div class="day-notes">
-            <h2>Day Notes</h2>
-            {% for class in classes %}
-                <h3>{{ class.name }}</h3>
-                <a href="{{ url_for('add_note', class_id=class.id) }}" class="btn-action btn-note">Add Note</a>
-                <a href="{{ url_for('edit_class', id=class.id) }}" class="btn-action btn-edit">Edit Class</a>
-                <a href="{{ url_for('delete_class', id=class.id) }}" class="btn-action btn-delete">Delete Class</a>
-                {% for note in class.notes %}
+            {% if selected_class %}
+                <h2>{{ selected_class.name }}</h2>
+                <a href="{{ url_for('add_note', class_id=selected_class.id) }}" class="btn-action btn-note">Add Note</a>
+                <a href="{{ url_for('edit_class', id=selected_class.id) }}" class="btn-action btn-edit">Edit Class</a>
+                <a href="{{ url_for('delete_class', id=selected_class.id) }}" class="btn-action btn-delete">Delete Class</a>
+                {% for note in notes %}
                     <div class="note">
                         <p>Date: {{ note.date }}</p>
                         <p>Topics: {{ note.topics }}</p>
@@ -37,7 +38,10 @@
                         </div>
                     </div>
                 {% endfor %}
-            {% endfor %}
+            {% else %}
+                <h2>Day Notes</h2>
+                <p>No class selected. Select a class to see the notes.</p>
+            {% endif %}
         </div>
     </div>
 {% endblock %}

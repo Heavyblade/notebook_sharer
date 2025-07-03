@@ -8,10 +8,20 @@ from werkzeug.utils import secure_filename
 
 @app.route('/')
 @app.route('/index')
+@app.route('/index/<int:class_id>')
 @login_required
-def index():
+def index(class_id=None):
     classes = Class.query.filter_by(user_id=current_user.id).all()
-    return render_template('index.html', title='Home', classes=classes)
+    if class_id is None and classes:
+        selected_class = classes[0]
+    else:
+        selected_class = Class.query.get(class_id)
+    
+    notes = []
+    if selected_class:
+        notes = Note.query.filter_by(class_id=selected_class.id).all()
+
+    return render_template('index.html', title='Home', classes=classes, notes=notes, selected_class=selected_class)
 
 @app.route('/login', methods=['GET', 'POST'])
 def login():

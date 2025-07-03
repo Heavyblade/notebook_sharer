@@ -1,6 +1,7 @@
 # Byte-compiled / optimized / DLL files
 __pycache__/
 app/__pycache__/
+app/static/uploads/
 *.py[cod]
 *$py.class
 

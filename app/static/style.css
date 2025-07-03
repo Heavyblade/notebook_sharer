@@ -193,6 +193,7 @@ body {
     border: 1px solid #374151; /* Border color */
     padding: 15px;
     margin-bottom: 15px;
+    margin-top: 15px;
     border-radius: 5px;
 }
 
@@ -332,4 +333,12 @@ form input[type="submit"]:hover {
     display: inline-flex;
     align-items: center;
     justify-content: center;
+}
+
+.class-item a {
+    text-decoration: none;
+    color: inherit;
+    display: flex;
+    align-items: center;
+    width: 100%;
 }

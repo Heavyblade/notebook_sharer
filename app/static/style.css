@@ -397,3 +397,39 @@ form input[type="submit"]:hover {
     font-size: 0.9em;
     margin-top: 5px;
 }
+
+/* Drop Zone */
+.drop-zone {
+    position: relative;
+    border: 2px dashed #4b5563;
+    border-radius: 8px;
+    text-align: center;
+    cursor: pointer;
+    transition: border-color 0.2s, background-color 0.2s;
+    background-size: contain;
+    background-position: center;
+    background-repeat: no-repeat;
+    aspect-ratio: 1 / 1;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    padding: 20px; /* Adjusted padding */
+}
+
+.drop-zone:hover {
+    border-color: #3b82f6;
+    background-color: #374151;
+}
+
+.drop-zone--over {
+    border-color: #22c55e;
+    background-color: #2c3a4e;
+}
+
+.drop-zone__prompt {
+    color: #9ca3af;
+}
+
+.drop-zone__input {
+    display: none;
+}

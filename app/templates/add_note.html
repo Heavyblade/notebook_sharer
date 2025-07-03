@@ -21,7 +21,10 @@
         </div>
         <div class="form-group">
             {{ form.image.label }}
-            {{ form.image(class="form-control") }}
+            <div class="drop-zone">
+                <span class="drop-zone__prompt">Arrastra un archivo o haz clic para seleccionar</span>
+                {{ form.image(class="drop-zone__input") }}
+            </div>
             {% for error in form.image.errors %}
             <span class="error-message">{{ error }}</span>
             {% endfor %}

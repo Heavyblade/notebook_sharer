@@ -59,6 +59,62 @@
                     }
                 });
             }
+
+            // Drop zone for image upload
+            var dropZone = document.querySelector('.drop-zone');
+            var fileInput = document.querySelector('.drop-zone__input');
+
+            if (dropZone) {
+                dropZone.addEventListener('click', function() {
+                    fileInput.click();
+                });
+
+                fileInput.addEventListener('change', function() {
+                    if (fileInput.files.length) {
+                        updateThumbnail(fileInput.files[0]);
+                    }
+                });
+
+                dropZone.addEventListener('dragover', function(e) {
+                    e.preventDefault();
+                    dropZone.classList.add('drop-zone--over');
+                });
+
+                ['dragleave', 'dragend'].forEach(function(type) {
+                    dropZone.addEventListener(type, function() {
+                        dropZone.classList.remove('drop-zone--over');
+                    });
+                });
+
+                dropZone.addEventListener('drop', function(e) {
+                    e.preventDefault();
+
+                    if (e.dataTransfer.files.length) {
+                        fileInput.files = e.dataTransfer.files;
+                        updateThumbnail(e.dataTransfer.files[0]);
+                    }
+
+                    dropZone.classList.remove('drop-zone--over');
+                });
+
+                function updateThumbnail(file) {
+                    var promptElement = dropZone.querySelector('.drop-zone__prompt');
+
+                    if (file && file.type.startsWith('image/')) {
+                        var reader = new FileReader();
+
+                        reader.onload = function() {
+                            dropZone.style.backgroundImage = 'url("' + reader.result + '")';
+                            promptElement.style.display = 'none';
+                        };
+
+                        reader.readAsDataURL(file);
+                    } else {
+                        dropZone.style.backgroundImage = 'none';
+                        promptElement.style.display = 'block';
+                    }
+                }
+            }
         });
     </script>
 </body>

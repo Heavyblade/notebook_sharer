@@ -6,6 +6,8 @@
     <link rel="stylesheet" href="{{ url_for('static', filename='style.css') }}">
     <!-- Font Awesome CDN -->
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.0/css/all.min.css"  crossorigin="anonymous" referrerpolicy="no-referrer" />
+    <!-- flatpickr CSS -->
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/flatpickr/dist/flatpickr.min.css">
 </head>
 <body>
     <nav class="navbar">
@@ -33,5 +35,31 @@
         
         {% block content %}{% endblock %}
     </div>
+
+    <!-- flatpickr JS -->
+    <script src="https://cdn.jsdelivr.net/npm/flatpickr"></script>
+    <!-- imask JS -->
+    <script src="https://unpkg.com/imask"></script>
+    <script>
+        document.addEventListener('DOMContentLoaded', function() {
+            var dateElement = document.querySelector('input[name="date"]');
+            if (dateElement) {
+                // Input mask
+                var dateMask = IMask(dateElement, {
+                    mask: '0000-00-00',
+                    lazy: false,
+                    placeholderChar: '_'
+                });
+
+                // Datepicker
+                flatpickr(dateElement, {
+                    dateFormat: "Y-m-d",
+                    onChange: function(selectedDates, dateStr, instance) {
+                        dateMask.value = dateStr;
+                    }
+                });
+            }
+        });
+    </script>
 </body>
 </html>

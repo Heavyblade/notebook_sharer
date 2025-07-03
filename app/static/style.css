@@ -433,3 +433,20 @@ form input[type="submit"]:hover {
 .drop-zone__input {
     display: none;
 }
+
+.ocr-text {
+    background-color: #2c3a4e;
+    border: 1px solid #4b5563;
+    border-radius: 8px;
+    padding: 15px;
+    margin-top: 15px;
+}
+
+.ocr-text p {
+    margin: 0;
+}
+
+.ocr-text p:first-child {
+    font-weight: bold;
+    margin-bottom: 10px;
+}

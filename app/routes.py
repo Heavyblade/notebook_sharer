@@ -5,6 +5,34 @@ from flask_login import current_user, login_user, logout_user, login_required
 from app.models import User, Class, Note
 import os
 from werkzeug.utils import secure_filename
+from langchain_openai import ChatOpenAI
+from langchain_core.messages import HumanMessage
+import base64
+
+def get_ocr_text(image_path):
+    with open(image_path, "rb") as image_file:
+        image_base64 = base64.b64encode(image_file.read()).decode('utf-8')
+
+    llm = ChatOpenAI(model="gpt-4o", max_tokens=2048)
+
+    message = HumanMessage(
+        content=[
+            {
+                "type": "text",
+                "text": "perform ocr on the image",
+            },
+            {
+                "type": "image_url",
+                "image_url": {
+                    "url": f"data:image/jpeg;base64,{image_base64}",
+                    "detail": "auto",
+                },
+            },
+        ]
+    )
+
+    response = llm.invoke([message])
+    return response.content
 
 @app.route('/')
 @app.route('/index')
@@ -100,8 +128,12 @@ def add_note(class_id):
     if form.validate_on_submit():
         f = form.image.data
         filename = secure_filename(f.filename)
-        f.save(os.path.join(app.config['UPLOAD_FOLDER'], filename))
-        note = Note(date=form.date.data, topics=form.topics.data, image_path=filename, class_id=class_id)
+        image_path = os.path.join(app.config['UPLOAD_FOLDER'], filename)
+        f.save(image_path)
+        
+        ocr_text = get_ocr_text(image_path)
+        
+        note = Note(date=form.date.data, topics=form.topics.data, image_path=filename, ocr_text=ocr_text, class_id=class_id)
         db.session.add(note)
         db.session.commit()
         flash('Your note has been added!')
@@ -117,8 +149,12 @@ def edit_note(id):
         if form.image.data:
             f = form.image.data
             filename = secure_filename(f.filename)
-            f.save(os.path.join(app.config['UPLOAD_FOLDER'], filename))
+            image_path = os.path.join(app.config['UPLOAD_FOLDER'], filename)
+            f.save(image_path)
             note.image_path = filename
+            
+            note.ocr_text = get_ocr_text(image_path)
+
         note.date = form.date.data
         note.topics = form.topics.data
         db.session.commit()

@@ -30,4 +30,5 @@ class Note(db.Model):
     date = db.Column(db.String(140))
     topics = db.Column(db.String(140))
     image_path = db.Column(db.String(140))
+    ocr_text = db.Column(db.Text)
     class_id = db.Column(db.Integer, db.ForeignKey('class.id'))

@@ -3,6 +3,7 @@ from app import app, db
 from app.forms import LoginForm, RegistrationForm, ClassForm, NoteForm
 from flask_login import current_user, login_user, logout_user, login_required
 from app.models import User, Class, Note
+from sqlalchemy import or_
 import os
 from werkzeug.utils import secure_filename
 from langchain_openai import ChatOpenAI
@@ -57,9 +58,14 @@ def login():
         return redirect(url_for('index'))
     form = LoginForm()
     if form.validate_on_submit():
-        user = User.query.filter_by(username=form.username.data).first()
+        # Find user by username or email in a single query
+        user = User.query.filter(
+            or_(User.username == form.username_or_email.data,
+                User.email == form.username_or_email.data)
+        ).first()
+        
         if user is None or not user.check_password(form.password.data):
-            flash('Invalid username or password')
+            flash('Invalid username/email or password')
             return redirect(url_for('login'))
         login_user(user, remember=form.remember_me.data)
         return redirect(url_for('index'))

@@ -450,3 +450,121 @@ form input[type="submit"]:hover {
     font-weight: bold;
     margin-bottom: 10px;
 }
+
+/* Login Form Styles */
+.login-container {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    min-height: calc(100vh - 140px); /* Full height minus navbar and padding */
+    padding: 20px;
+}
+
+.login-form {
+    background-color: #1F2937;
+    border: 1px solid #374151;
+    border-radius: 12px;
+    padding: 40px;
+    width: 100%;
+    max-width: 450px;
+    box-shadow: 0 4px 12px rgba(0, 0, 0, 0.3);
+}
+
+.login-form h1 {
+    text-align: center;
+    margin-bottom: 30px;
+    color: #F9FAFB;
+    font-size: 2.2em;
+    font-weight: 600;
+}
+
+.centered-form {
+    display: flex;
+    flex-direction: column;
+    gap: 20px;
+    max-width: none;
+}
+
+.form-field {
+    display: flex;
+    flex-direction: column;
+    gap: 8px;
+}
+
+.form-field label {
+    font-weight: 500;
+    color: #F9FAFB;
+    font-size: 1.1em;
+}
+
+.form-input {
+    background-color: #374151 !important;
+    border: 1px solid #4b5563 !important;
+    color: #d4d4d4 !important;
+    padding: 15px !important;
+    border-radius: 8px !important;
+    font-size: 1.1em !important;
+    transition: border-color 0.2s, box-shadow 0.2s;
+}
+
+.form-input:focus {
+    outline: none !important;
+    border-color: #3b82f6 !important;
+    box-shadow: 0 0 0 3px rgba(59, 130, 246, 0.3) !important;
+}
+
+.form-submit {
+    background: linear-gradient(to right, #3b82f6, #8b5cf6) !important;
+    color: white !important;
+    padding: 15px 20px !important;
+    border: none !important;
+    border-radius: 8px !important;
+    cursor: pointer !important;
+    font-size: 1.1em !important;
+    font-weight: 500 !important;
+    transition: opacity 0.2s !important;
+    margin-top: 10px !important;
+}
+
+.form-submit:hover {
+    opacity: 0.9 !important;
+}
+
+.checkbox-field {
+    flex-direction: row !important;
+    align-items: center !important;
+    gap: 10px !important;
+}
+
+.checkbox-field input {
+    width: auto !important;
+    margin: 0 !important;
+}
+
+.checkbox-field label {
+    margin: 0 !important;
+    font-size: 1em !important;
+}
+
+.error-text {
+    color: #ef4444;
+    font-size: 0.9em;
+    margin-top: 2px;
+}
+
+.register-link {
+    text-align: center;
+    margin-top: 25px;
+    color: #9ca3af;
+    font-size: 1em;
+}
+
+.register-link a {
+    color: #3b82f6;
+    text-decoration: none;
+    font-weight: 500;
+}
+
+.register-link a:hover {
+    text-decoration: underline;
+}

@@ -1,25 +1,33 @@
 {% extends "base.html" %}
 
 {% block content %}
-    <h1>Sign In</h1>
-    <form action="" method="post" novalidate>
-        {{ form.hidden_tag() }}
-        <p>
-            {{ form.username_or_email.label }}<br>
-            {{ form.username_or_email(size=32) }}
-            {% for error in form.username_or_email.errors %}
-            <span style="color: red;">[{{ error }}]</span>
-            {% endfor %}
-        </p>
-        <p>
-            {{ form.password.label }}<br>
-            {{ form.password(size=32) }}
-            {% for error in form.password.errors %}
-            <span style="color: red;">[{{ error }}]</span>
-            {% endfor %}
-        </p>
-        <p>{{ form.remember_me() }} {{ form.remember_me.label }}</p>
-        <p>{{ form.submit() }}</p>
-    </form>
-    <p>New User? <a href="{{ url_for('register') }}">Click to Register!</a></p>
+    <div class="login-container">
+        <div class="login-form">
+            <h1>Sign In</h1>
+            <form action="" method="post" novalidate class="centered-form">
+                {{ form.hidden_tag() }}
+                <div class="form-field">
+                    {{ form.username_or_email.label }}
+                    {{ form.username_or_email(size=32, class="form-input") }}
+                    {% for error in form.username_or_email.errors %}
+                    <span class="error-text">[{{ error }}]</span>
+                    {% endfor %}
+                </div>
+                <div class="form-field">
+                    {{ form.password.label }}
+                    {{ form.password(size=32, class="form-input") }}
+                    {% for error in form.password.errors %}
+                    <span class="error-text">[{{ error }}]</span>
+                    {% endfor %}
+                </div>
+                <div class="form-field checkbox-field">
+                    {{ form.remember_me() }} {{ form.remember_me.label }}
+                </div>
+                <div class="form-field">
+                    {{ form.submit(class="form-submit") }}
+                </div>
+            </form>
+            <p class="register-link">New User? <a href="{{ url_for('register') }}">Click to Register!</a></p>
+        </div>
+    </div>
 {% endblock %}

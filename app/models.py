@@ -23,12 +23,17 @@ class Class(db.Model):
     id = db.Column(db.Integer, primary_key=True)
     name = db.Column(db.String(140))
     user_id = db.Column(db.Integer, db.ForeignKey('user.id'))
-    notes = db.relationship('Note', backref='cl', lazy='dynamic')
+    notes = db.relationship('Note', backref='cl', lazy='dynamic', cascade="all, delete-orphan")
 
 class Note(db.Model):
     id = db.Column(db.Integer, primary_key=True)
     date = db.Column(db.String(140))
     topics = db.Column(db.String(140))
+    class_id = db.Column(db.Integer, db.ForeignKey('class.id'))
+    images = db.relationship('NoteImage', backref='note', lazy='dynamic', cascade="all, delete-orphan")
+
+class NoteImage(db.Model):
+    id = db.Column(db.Integer, primary_key=True)
     image_path = db.Column(db.String(140))
     ocr_text = db.Column(db.Text)
-    class_id = db.Column(db.Integer, db.ForeignKey('class.id'))
+    note_id = db.Column(db.Integer, db.ForeignKey('note.id'))

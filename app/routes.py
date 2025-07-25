@@ -138,7 +138,7 @@ def add_note(class_id):
         db.session.add(note)
         db.session.commit()
 
-        files = request.files.getlist(form.image.name)
+        files = request.files.getlist(form.images.name)
         for f in files:
             if f:
                 filename = secure_filename(f.filename)

@@ -20,12 +20,13 @@
             {% endfor %}
         </div>
         <div class="form-group">
-            {{ form.image.label }}
+            {{ form.images.label }}
             <div class="drop-zone">
-                <span class="drop-zone__prompt">Arrastra un archivo o haz clic para seleccionar</span>
-                {{ form.image(class="drop-zone__input", multiple=true) }}
+                <span class="drop-zone__prompt">Arrastra archivos o haz clic para seleccionar</span>
+                {{ form.images(class="drop-zone__input", multiple=true) }}
             </div>
-            {% for error in form.image.errors %}
+            <div id="image-preview-container" class="image-preview-container"></div>
+            {% for error in form.images.errors %}
             <span class="error-message">{{ error }}</span>
             {% endfor %}
         </div>
@@ -34,77 +35,143 @@
         </div>
     </form>
 </div>
-{% endblock %}
+
+<style>
+.drop-zone {
+    max-width: 100%;
+    height: 150px;
+    padding: 25px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    text-align: center;
+    font-family: "Quicksand", sans-serif;
+    font-weight: 500;
+    font-size: 20px;
+    cursor: pointer;
+    color: #cccccc;
+    border: 4px dashed #009578;
+    border-radius: 10px;
+    position: relative;
+    margin-bottom: 15px;
+}
+
+.drop-zone--over {
+    border-style: solid;
+}
+
+.drop-zone__input {
+    display: none;
+}
+
+.image-preview-container {
+    display: grid;
+    grid-template-columns: repeat(auto-fill, minmax(150px, 1fr));
+    gap: 15px;
+    margin-top: 15px;
+}
+
+.image-preview {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    border: 1px solid #ddd;
+    border-radius: 5px;
+    padding: 5px;
+    background-color: #f9f9f9;
+}
+
+.image-preview__image {
+    width: 100%;
+    height: 120px;
+    object-fit: cover;
+    border-radius: 5px;
+    margin-bottom: 5px;
+}
+
+.image-preview__label {
+    font-size: 12px;
+    text-align: center;
+    word-break: break-all;
+}
+</style>
 
 <script>
-document.querySelectorAll(".drop-zone__input").forEach((inputElement) => {
-    const dropZoneElement = inputElement.closest(".drop-zone");
+document.addEventListener('DOMContentLoaded', function() {
+    document.querySelectorAll(".drop-zone__input").forEach((inputElement) => {
+        const dropZoneElement = inputElement.closest(".drop-zone");
+        const previewContainer = document.getElementById("image-preview-container");
 
-    dropZoneElement.addEventListener("click", (e) => {
-        inputElement.click();
-    });
+        if (!dropZoneElement) return;
 
-    inputElement.addEventListener("change", (e) => {
-        if (inputElement.files.length) {
-            updateThumbnail(dropZoneElement, inputElement.files);
-        }
-    });
+        dropZoneElement.addEventListener("click", (e) => {
+            inputElement.click();
+        });
 
-    dropZoneElement.addEventListener("dragover", (e) => {
-        e.preventDefault();
-        dropZoneElement.classList.add("drop-zone--over");
-    });
+        inputElement.addEventListener("change", (e) => {
+            if (inputElement.files.length) {
+                updateThumbnail(dropZoneElement, previewContainer, inputElement.files);
+            }
+        });
 
-    ["dragleave", "dragend"].forEach((type) => {
-        dropZoneElement.addEventListener(type, (e) => {
+        dropZoneElement.addEventListener("dragover", (e) => {
+            e.preventDefault();
+            dropZoneElement.classList.add("drop-zone--over");
+        });
+
+        ["dragleave", "dragend"].forEach((type) => {
+            dropZoneElement.addEventListener(type, (e) => {
+                dropZoneElement.classList.remove("drop-zone--over");
+            });
+        });
+
+        dropZoneElement.addEventListener("drop", (e) => {
+            e.preventDefault();
+
+            if (e.dataTransfer.files.length) {
+                inputElement.files = e.dataTransfer.files;
+                updateThumbnail(dropZoneElement, previewContainer, e.dataTransfer.files);
+            }
+
             dropZoneElement.classList.remove("drop-zone--over");
         });
     });
-
-    dropZoneElement.addEventListener("drop", (e) => {
-        e.preventDefault();
-
-        if (e.dataTransfer.files.length) {
-            inputElement.files = e.dataTransfer.files;
-            updateThumbnail(dropZoneElement, e.dataTransfer.files);
-        }
-
-        dropZoneElement.classList.remove("drop-zone--over");
-    });
 });
 
-function updateThumbnail(dropZoneElement, files) {
-    let thumbnailContainer = dropZoneElement.querySelector(".drop-zone__thumb-container");
-
-    if (dropZoneElement.querySelector(".drop-zone__prompt")) {
-        dropZoneElement.querySelector(".drop-zone__prompt").remove();
+function updateThumbnail(dropZoneElement, previewContainer, files) {
+    const promptElement = dropZoneElement.querySelector(".drop-zone__prompt");
+    if (promptElement) {
+        // Hide the prompt, but don't remove it
+        promptElement.style.display = 'none';
     }
 
-    if (!thumbnailContainer) {
-        thumbnailContainer = document.createElement("div");
-        thumbnailContainer.classList.add("drop-zone__thumb-container");
-        dropZoneElement.appendChild(thumbnailContainer);
-    }
-
-    thumbnailContainer.innerHTML = ""; // Clear existing thumbnails
+    previewContainer.innerHTML = ""; // Clear existing thumbnails
 
     for (const file of files) {
         const thumbnailElement = document.createElement("div");
-        thumbnailElement.classList.add("drop-zone__thumb");
-        thumbnailContainer.appendChild(thumbnailElement);
+        thumbnailElement.classList.add("image-preview");
+        previewContainer.appendChild(thumbnailElement);
 
-        thumbnailElement.dataset.label = file.name;
+        const img = document.createElement("img");
+        img.classList.add("image-preview__image");
+        thumbnailElement.appendChild(img);
+
+        const label = document.createElement("span");
+        label.classList.add("image-preview__label");
+        label.textContent = file.name;
+        thumbnailElement.appendChild(label);
 
         if (file.type.startsWith("image/")) {
             const reader = new FileReader();
 
             reader.readAsDataURL(file);
             reader.onload = () => {
-                thumbnailElement.style.backgroundImage = `url('${reader.result}')`;
+                img.src = reader.result;
             };
         } else {
-            thumbnailElement.style.backgroundImage = null;
+            img.src = ""; // Or a placeholder for non-image files
         }
     }
 }
 </script>
+{% endblock %}

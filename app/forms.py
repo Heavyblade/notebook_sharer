@@ -1,8 +1,8 @@
 from flask_wtf import FlaskForm
-from wtforms import StringField, PasswordField, BooleanField, SubmitField
+from wtforms import StringField, PasswordField, BooleanField, SubmitField, MultipleFileField
 from wtforms.validators import DataRequired, Email, EqualTo, ValidationError
 from app.models import User
-from flask_wtf.file import FileField, FileAllowed, FileRequired
+from flask_wtf.file import FileAllowed
 
 class LoginForm(FlaskForm):
     username_or_email = StringField('Username or Email', validators=[DataRequired()])
@@ -35,5 +35,5 @@ class ClassForm(FlaskForm):
 class NoteForm(FlaskForm):
     date = StringField('Date', validators=[DataRequired()])
     topics = StringField('Topics', validators=[DataRequired()])
-    image = FileField('Image', validators=[FileRequired(), FileAllowed(['jpg', 'png'], 'Images only!')])
+    images = MultipleFileField('Images', validators=[DataRequired(), FileAllowed(['jpg', 'png'], 'Images only!')])
     submit = SubmitField('Submit')

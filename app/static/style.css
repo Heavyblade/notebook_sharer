@@ -651,3 +651,16 @@ form input[type="submit"]:hover {
 .register-link a:hover {
     text-decoration: underline;
 }
+
+.image-gallery {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 10px;
+}
+
+.image-container {
+    border: 1px solid #ccc;
+    padding: 5px;
+    border-radius: 5px;
+    text-align: center;
+}

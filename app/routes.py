@@ -19,7 +19,7 @@ def get_ocr_text(image_path):
     with open(image_path, "rb") as image_file:
         image_base64 = base64.b64encode(image_file.read()).decode('utf-8')
 
-    llm = ChatOpenAI(model="gpt-4o", max_tokens=2048)
+    llm = ChatOpenAI(model="gpt-4.1", max_tokens=2048)
 
     message = HumanMessage(
         content=[

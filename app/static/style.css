@@ -662,5 +662,5 @@ form input[type="submit"]:hover {
     border: 1px solid #ccc;
     padding: 5px;
     border-radius: 5px;
-    text-align: center;
+    text-align: left;
 }

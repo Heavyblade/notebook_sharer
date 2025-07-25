@@ -25,7 +25,7 @@ def get_ocr_text(image_path):
         content=[
             {
                 "type": "text",
-                "text": "perform ocr on the image",
+                "text": "perform ocr on the image, and return the text in markdown format",
             },
             {
                 "type": "image_url",

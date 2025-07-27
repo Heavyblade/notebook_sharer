@@ -38,7 +38,7 @@
     <div class="existing-images">
         {% for image in note.images %}
         <div class="existing-image">
-            <img src="{{ url_for('static', filename='uploads/' + image.image_path) }}" alt="Note image">
+            <a href="{{ url_for('static', filename='uploads/' + image.image_path) }}" data-lightbox="note-{{ note.id }}-images" data-title="{{ note.topics }}"><img src="{{ url_for('static', filename='uploads/' + image.image_path) }}" alt="Note image"></a>
             <a href="{{ url_for('delete_image', id=image.id) }}" class="btn-action btn-delete"><i class="fa-solid fa-trash"></i> Delete</a>
         </div>
         {% endfor %}

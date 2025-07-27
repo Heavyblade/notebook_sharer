@@ -33,7 +33,7 @@
                             <div class="image-gallery">
                                 {% for image in note.images %}
                                     <div class="image-container">
-                                        <img src="{{ url_for('static', filename='uploads/' + image.image_path) }}" width="200px">
+                                        <a href="{{ url_for('static', filename='uploads/' + image.image_path) }}" data-lightbox="note-{{ note.id }}" data-title="{{ note.topics }}"><img src="{{ url_for('static', filename='uploads/' + image.image_path) }}" width="200px"></a>
                                         {% if image.ocr_text %}
                                         <div class="ocr-text">
                                             <p><strong>OCR Text:</strong></p>
@@ -64,7 +64,7 @@
                         <div class="image-gallery">
                             {% for image in note.images %}
                                 <div class="image-container">
-                                    <img src="{{ url_for('static', filename='uploads/' + image.image_path) }}" width="200px">
+                                    <a href="{{ url_for('static', filename='uploads/' + image.image_path) }}" data-lightbox="note-{{ note.id }}" data-title="{{ note.topics }}"><img src="{{ url_for('static', filename='uploads/' + image.image_path) }}" width="200px"></a>
                                     {% if image.ocr_text %}
                                     <div class="ocr-text">
                                         <p><strong>OCR Text:</strong></p>

@@ -52,8 +52,13 @@ def index(class_id=None):
     
     if query:
         # If there is a search query, filter notes based on the query
-        notes_query = Note.query.join(Class).filter(Class.user_id == current_user.id)
-        notes_query = notes_query.join(NoteImage).filter(NoteImage.ocr_text.contains(query))
+        notes_query = Note.query.join(Class).filter(Class.user_id == current_user.id).join(NoteImage).filter(
+            or_(
+                NoteImage.ocr_text.contains(query),
+                Note.date.contains(query),
+                Note.topics.contains(query)
+            )
+        )
         notes = notes_query.all()
         selected_class = None  # No specific class is selected when searching
     else:

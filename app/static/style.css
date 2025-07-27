@@ -664,3 +664,34 @@ form input[type="submit"]:hover {
     border-radius: 5px;
     text-align: left;
 }
+
+.search-form {
+    display: flex;
+    margin-top: 15px;
+    flex-direction: row !important; /* Override general form style */
+    align-items: center;
+    gap: 5px;
+    max-width: none; /* Override general form style */
+}
+
+.search-form input {
+    background-color: #3c3c3c;
+    border: 1px solid #3c3c3c;
+    color: #d4d4d4;
+    padding: 6px 10px;
+    border-radius: 5px;
+    width: 200px;
+}
+
+.search-form button {
+    background: transparent;
+    border: none;
+    color: #d4d4d4;
+    padding: 6px;
+    cursor: pointer;
+    font-size: 1em;
+}
+
+.search-form button:hover {
+    color: #fff;
+}

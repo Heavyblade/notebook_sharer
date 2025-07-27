@@ -37,3 +37,7 @@ class NoteForm(FlaskForm):
     topics = StringField('Topics', validators=[DataRequired()])
     images = MultipleFileField('Images', validators=[DataRequired(), FileAllowed(['jpg', 'png'], 'Images only!')])
     submit = SubmitField('Submit')
+
+class SearchForm(FlaskForm):
+    query = StringField('Search', validators=[DataRequired()])
+    submit = SubmitField('Search')

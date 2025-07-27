@@ -22,7 +22,37 @@
             </a>
         </div>
         <div class="day-notes">
-            {% if selected_class %}
+            {% if query %}
+                <h2>Search Results for "{{ query }}"</h2>
+                {% if notes %}
+                    <p>{{ notes|length }} note(s) found.</p>
+                    {% for note in notes %}
+                        <div class="note">
+                            <p>Date: {{ note.date }}</p>
+                            <p>Topics: {{ note.topics }}</p>
+                            <div class="image-gallery">
+                                {% for image in note.images %}
+                                    <div class="image-container">
+                                        <img src="{{ url_for('static', filename='uploads/' + image.image_path) }}" width="200px">
+                                        {% if image.ocr_text %}
+                                        <div class="ocr-text">
+                                            <p><strong>OCR Text:</strong></p>
+                                            <div>{{ image.ocr_text | markdown }}</div>
+                                        </div>
+                                        {% endif %}
+                                    </div>
+                                {% endfor %}
+                            </div>
+                            <div class="note-actions">
+                                <a href="{{ url_for('edit_note', id=note.id) }}" class="btn-action btn-edit btn-icon" title="Edit Note"><i class="fa-solid fa-pen-to-square"></i></a>
+                                <a href="{{ url_for('delete_note', id=note.id) }}" class="btn-action btn-delete btn-icon" title="Delete Note"><i class="fa-solid fa-trash"></i></a>
+                            </div>
+                        </div>
+                    {% endfor %}
+                {% else %}
+                    <p>No results found for your search.</p>
+                {% endif %}
+            {% elif selected_class %}
                 <h2>{{ selected_class.name }}</h2>
                 <a href="{{ url_for('add_note', class_id=selected_class.id) }}" class="btn-action btn-note">Add Note</a>
                 <a href="{{ url_for('edit_class', id=selected_class.id) }}" class="btn-action btn-edit">Edit Class</a>

@@ -1,6 +1,6 @@
 from flask import render_template, flash, redirect, url_for, request
 from app import app, db
-from app.forms import LoginForm, RegistrationForm, ClassForm, NoteForm
+from app.forms import LoginForm, RegistrationForm, ClassForm, NoteForm, SearchForm
 from flask_login import current_user, login_user, logout_user, login_required
 from app.models import User, Class, Note, NoteImage
 from sqlalchemy import or_
@@ -40,22 +40,34 @@ def get_ocr_text(image_path):
     response = llm.invoke([message])
     return response.content
 
-@app.route('/')
-@app.route('/index')
-@app.route('/index/<int:class_id>')
+@app.route('/', methods=['GET', 'POST'])
+@app.route('/index', methods=['GET', 'POST'])
+@app.route('/index/<int:class_id>', methods=['GET', 'POST'])
 @login_required
 def index(class_id=None):
-    classes = Class.query.filter_by(user_id=current_user.id).all()
-    if class_id is None and classes:
-        selected_class = classes[0]
-    else:
-        selected_class = Class.query.get(class_id)
-    
-    notes = []
-    if selected_class:
-        notes = Note.query.filter_by(class_id=selected_class.id).all()
+    search_form = SearchForm()
+    query = request.args.get('query')
 
-    return render_template('index.html', title='Home', classes=classes, notes=notes, selected_class=selected_class)
+    classes = Class.query.filter_by(user_id=current_user.id).all()
+    
+    if query:
+        # If there is a search query, filter notes based on the query
+        notes_query = Note.query.join(Class).filter(Class.user_id == current_user.id)
+        notes_query = notes_query.join(NoteImage).filter(NoteImage.ocr_text.contains(query))
+        notes = notes_query.all()
+        selected_class = None  # No specific class is selected when searching
+    else:
+        # Default behavior: show notes for the selected class
+        if class_id is None and classes:
+            selected_class = classes[0]
+        else:
+            selected_class = Class.query.get(class_id)
+        
+        notes = []
+        if selected_class:
+            notes = Note.query.filter_by(class_id=selected_class.id).all()
+
+    return render_template('index.html', title='Home', classes=classes, notes=notes, selected_class=selected_class, search_form=search_form, query=query)
 
 @app.route('/login', methods=['GET', 'POST'])
 def login():
